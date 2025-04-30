@@ -113,7 +113,7 @@ class Rasterizer:
 
         instruction_set = []
         for json in self.climate_data:
-            bbox = DMIJSONUtils.get_bbox(json)
+            bbox = DMIJSONUtils.get_bbox(json)[0]
             value = DMIJSONUtils.get_value(json)
 
             instruction_set.append([bbox, value])
@@ -121,9 +121,7 @@ class Rasterizer:
         return instruction_set
     
 
-    # def write_climate_data_to_raster(self, raster_path):
-
-    def write_climate_data_to_raster(raster_path: str, raster_instruction_set: list):
+    def write_climate_data_to_raster(self, raster_path: str, raster_instruction_set: list):
         """
         Writes values to an existing raster given a list of [bbox, value] entries.
         
@@ -136,7 +134,7 @@ class Rasterizer:
             dtype = dst.dtypes[0]
 
             for bbox, value in raster_instruction_set:
-                minx, miny, maxx, maxy = bbox
+                minx, miny, maxx, maxy, _ = bbox
                 # Get the window (pixel region) corresponding to the bbox
                 window = from_bounds(minx, miny, maxx, maxy, transform=transform)
                 window = window.round_offsets().round_lengths()
