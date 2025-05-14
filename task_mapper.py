@@ -15,8 +15,6 @@ class TaskMapper:
             api_output="api_output/", 
         ):
 
-        # self.datetime_range = self.format_datetime_range(date_from, date_to)
-
         if isinstance(climate_parameters, str):
             climate_parameters = [climate_parameters]
         elif not isinstance(climate_parameters, list):
@@ -35,7 +33,6 @@ class TaskMapper:
 
         if self.temporal_resolution == "daily":
             date_list = self.generate_date_list(self.date_from, self.date_to, "daily")
-            # task_map = list(product(date_list, self.climate_parameters))
 
             task_map = [[a, b, "daily"] for a, b in product(date_list, self.climate_parameters)]
 
